@@ -6,11 +6,17 @@ start:
 
 ALIGN 4
 mboot:
-
+    EXTERN code, bss, end
+    
+    dd mboot
+    dd code
+    dd bss
+    dd end
+    dd start
 
 stublet:
-    ;extern main
-    ;call _main
+    extern fmain
+    call fmain
     jmp $
 
 SECTION .bss
