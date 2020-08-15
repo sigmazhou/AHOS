@@ -34,12 +34,6 @@ void outportb (unsigned short _port, unsigned char _data){
 
 int main(){
     init_video();
-
-    unsigned char *input = (unsigned char *)0xB8000;
-    unsigned char color = (0 << 4) | (15 & 0x0F);
-
-    *input++ = 'H'; *input++ = color;
-    cls();
     putstr("ahos");
     
     

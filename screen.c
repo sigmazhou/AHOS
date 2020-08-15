@@ -2,13 +2,13 @@
 #define WIDTH 80
 #define HEIGHT 25
 
-unsigned *textptr = (unsigned *)0xB8000;
-int color = 0x0f;
+unsigned short *textptr = (unsigned short *)0xB8000;
+unsigned char color = 0x0f;
 int currx = 0, curry = 0;
 
 void scrollcheck()
 {
-    int space = 0x20 | (color << 8);
+    unsigned short space = 0x20 | (color << 8);
     if (curry >= HEIGHT)
     {
         int toroll = curry - HEIGHT + 1;
@@ -19,7 +19,7 @@ void scrollcheck()
 
 void mov_cursor()
 {
-    int pos = curry * WIDTH + currx;
+    unsigned pos = curry * WIDTH + currx;
     outportb(0x3D4, 14);
     outportb(0x3D5, pos >> 8);
     outportb(0x3D4, 15);
@@ -28,10 +28,10 @@ void mov_cursor()
 
 void cls()
 {
-    int space = 0x20 | (color << 8);
+    unsigned short space = 0x20 | (color << 8);
     memsetw(textptr, space, HEIGHT * WIDTH);
-    currx = 1;
-    curry = 1;
+    currx = 0;
+    curry = 0;
     mov_cursor();
 }
 
@@ -56,8 +56,8 @@ void putchar(unsigned char c)
     }
     else if (c >= ' ')
     {
-        short towrite = c | (color << 8);
-        memsetw(textptr + currx + curry * WIDTH, towrite, 1);
+        unsigned short towrite = c | (color << 8);
+        memsetw(textptr + (currx + curry * WIDTH), towrite, 1);
         currx++;
     }
     if (currx > WIDTH)
