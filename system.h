@@ -6,3 +6,10 @@ extern unsigned short *memsetw(unsigned short *dest, unsigned short val, int cou
 extern int strlen(const char *str);
 extern unsigned char inportb (unsigned short _port);
 extern void outportb (unsigned short _port, unsigned char _data);
+
+extern void cls();
+extern void putchar(unsigned char c);
+extern void putstr(unsigned char *str);
+extern void setcolor(unsigned char forecolor, unsigned char backcolor);
+extern void init_video();
+		

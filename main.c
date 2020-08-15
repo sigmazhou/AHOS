@@ -20,7 +20,7 @@ unsigned short *memsetw(unsigned short *dest, unsigned short val, int count){
 }
 int strlen(const char *str){
     int len=0;
-    while(*str != 0) len++;
+    while(*str++ != '\0') len++;
     return len;
 }
 unsigned char inportb (unsigned short _port){
@@ -32,7 +32,16 @@ void outportb (unsigned short _port, unsigned char _data){
     __asm__ __volatile__ ("outb %1, %0" : : "dN" (_port), "a" (_data));
 }
 
-void fmain(){
+int main(){
+    init_video();
 
-    while(1);
+    unsigned char *input = (unsigned char *)0xB8000;
+    unsigned char color = (0 << 4) | (15 & 0x0F);
+
+    *input++ = 'H'; *input++ = color;
+    cls();
+    putstr("ahos");
+    
+    
+    return 0;
 }
