@@ -2,7 +2,9 @@
 global start
 start:
     mov esp, _sys_stack     ; This points the stack to our new stack area
-    jmp stublet
+    extern main
+    call main
+    jmp infloop
 
 ALIGN 4
 mboot:
@@ -29,10 +31,24 @@ mboot:
     dd end
     dd start
 
-stublet:
-    extern main
-    call main
-    jmp $
+infloop:
+    hlt
+    jmp infloop
+
+global gdt_load
+extern gptr
+gdt_load:
+    lgdt [gptr]
+    mov ax, 0x10      ; 0x10 is the offset in the GDT to our data segment
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    mov ss, ax
+    
+    jmp 0x08:load2   ; 0x08 is the offset to our code segment: Far jump!
+load2:
+    ret               ; Returns back to the C code!
 
 SECTION .bss
     resb 8192               ; This reserves 8KBytes of memory here

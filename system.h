@@ -12,5 +12,5 @@ extern void putchar(unsigned char c);
 extern void putstr(unsigned char *str);
 extern void setcolor(unsigned char forecolor, unsigned char backcolor);
 extern void init_video();
-		
-extern void mov_cursor();
+	
+extern void gdt_init();
