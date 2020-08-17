@@ -68,8 +68,8 @@ void isr_init(){
     idt_set_gate(31, (unsigned)isr31, 0x08, 0x8E);
 }
 
-void int_handler(struct regs * r){
-    putchar('q');
+void isr_handler(struct regs * r){
+    //putchar('q');
     if (r->int_no < 32)
     {
         putstr(" Exception . System Halted!\r\n");

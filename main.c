@@ -36,10 +36,13 @@ int main(){
     gdt_init();
     idt_init();
     isr_init();
+    irq_init();
+    timer_init(100);
     init_video();
     putstr("ahos");
-    int a=1; putchar(a/0);
+    asm volatile ("sti");
+    //int a=1; putchar(a/0);
     //asm volatile ("int $0x3");
-    
+    while(1);
     return 0;
 }

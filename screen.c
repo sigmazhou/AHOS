@@ -14,6 +14,7 @@ void scrollcheck()
         int toroll = curry - HEIGHT + 1;
         memcpy(textptr, textptr + WIDTH * toroll, (HEIGHT - toroll) * WIDTH * 2);
         memsetw(textptr + WIDTH * (HEIGHT - toroll), space, toroll * WIDTH);
+        curry-=toroll;
     }
 }
 
@@ -53,6 +54,7 @@ void putchar(unsigned char c)
     else if (c == '\n')
     {
         curry += 1;
+        currx=0;
     }
     else if (c >= ' ')
     {

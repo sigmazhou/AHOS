@@ -4,8 +4,8 @@
 //using namespace std;
 
 int main(){
-    for(int i=0;i<32;i++){
-        printf("idt_set_gate(%d, (unsigned)isr%d, 0x08, 0x8E);\n",i,i);
+    for(int i=0;i<16;i++){
+        printf("idt_set_gate(%d, (unsigned)irq%d, 0x08, 0x8E);\n",i+32,i);
     }
 
     //getchar();

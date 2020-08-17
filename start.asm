@@ -32,7 +32,7 @@ mboot:
     dd start
 
 infloop:
-    hlt
+    ;hlt
     jmp infloop
 
 global gdt_load
@@ -115,7 +115,7 @@ ISR_NOERRCODE 31
 ; 32 ～ 255 用户自定义
 ISR_NOERRCODE 255
 
-extern int_handler
+extern isr_handler
 ; This is our common ISR stub. It saves the processor state, sets
 ; up for kernel mode segments, calls the C-level fault handler,
 ; and finally restores the stack frame.
@@ -133,7 +133,7 @@ isr_common_stub:
 
     mov eax, esp    ; Push us the stack
     push eax
-    mov eax, int_handler
+    mov eax, isr_handler
     call eax        ; A special call, preserves the 'eip' register
 
     pop eax
@@ -145,6 +145,60 @@ isr_common_stub:
     popa
     add esp, 8     ; Cleans up the pushed error code and pushed ISR number
     iret           ; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESP!
+
+
+;IRQ
+%macro IRQ 2
+GLOBAL irq%1
+irq%1:
+    cli
+    push byte 0
+    push byte %2
+    jmp irq_common_stub
+%endmacro
+
+IRQ   0,    32  ; 电脑系统计时器
+IRQ   1,    33  ; 键盘
+IRQ   2,    34  ; 与 IRQ9 相接，MPU-401 MD 使用
+IRQ   3,    35  ; 串口设备
+IRQ   4,    36  ; 串口设备
+IRQ   5,    37  ; 建议声卡使用
+IRQ   6,    38  ; 软驱传输控制使用
+IRQ   7,    39  ; 打印机传输控制使用
+IRQ   8,    40  ; 即时时钟
+IRQ   9,    41  ; 与 IRQ2 相接，可设定给其他硬件
+IRQ  10,    42  ; 建议网卡使用
+IRQ  11,    43  ; 建议 AGP 显卡使用
+IRQ  12,    44  ; 接 PS/2 鼠标，也可设定给其他硬件
+IRQ  13,    45  ; 协处理器使用
+IRQ  14,    46  ; IDE0 传输控制使用
+IRQ  15,    47  ; IDE1 传输控制使用
+
+extern irq_handler
+irq_common_stub:
+    pusha
+    push ds
+    push es
+    push fs
+    push gs
+    mov ax, 0x10
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    mov eax, esp
+    push eax
+    mov eax, irq_handler
+    call eax
+    pop eax
+    pop gs
+    pop fs
+    pop es
+    pop ds
+    popa
+    add esp, 8
+    iret
+
 
 SECTION .bss
     resb 8192               ; This reserves 8KBytes of memory here
