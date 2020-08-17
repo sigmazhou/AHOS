@@ -34,9 +34,12 @@ void outportb (unsigned short _port, unsigned char _data){
 
 int main(){
     gdt_init();
+    idt_init();
+    isr_init();
     init_video();
     putstr("ahos");
-    
+    int a=1; putchar(a/0);
+    //asm volatile ("int $0x3");
     
     return 0;
 }
