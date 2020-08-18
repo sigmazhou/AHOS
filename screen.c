@@ -81,7 +81,7 @@ void putstr(unsigned char * text){
 void setcolor(unsigned char fore,unsigned char back){
     color=(back<<4)|fore;
 }
-void init_video(void)
+void video_init(void)
 {
     textptr = (unsigned short *)0xB8000;
     cls();

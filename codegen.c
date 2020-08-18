@@ -4,10 +4,13 @@
 //using namespace std;
 
 int main(){
-    for(int i=0;i<16;i++){
-        printf("idt_set_gate(%d, (unsigned)irq%d, 0x08, 0x8E);\n",i+32,i);
+    char a[]="qwertyuiop[]asdfghjkl;'`\\zxcvbnm,./";
+    int i=0;
+    while(a[i]!='\0'){
+        printf("'%c',",a[i]);
+        i++;
     }
 
-    //getchar();
+    getchar();
     return 0;
 }

@@ -23,7 +23,7 @@ extern void cls();
 extern void putchar(unsigned char c);
 extern void putstr(unsigned char *str);
 extern void setcolor(unsigned char forecolor, unsigned char backcolor);
-extern void init_video();
+extern void video_init();
 	
 extern void gdt_init();
 
@@ -39,4 +39,5 @@ extern void irq_uninstall_handler(int irq);
 
 extern void timer_init(int hz);
 
+extern char * uinttostr(unsigned num);
 		

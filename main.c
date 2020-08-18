@@ -38,9 +38,12 @@ int main(){
     isr_init();
     irq_init();
     timer_init(100);
-    init_video();
-    putstr("ahos");
+    
+    video_init();
+    
     asm volatile ("sti");
+    kb_init();
+    putstr("AHOS\n");
     //int a=1; putchar(a/0);
     //asm volatile ("int $0x3");
     while(1);

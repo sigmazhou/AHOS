@@ -11,7 +11,7 @@ void timer_handler(struct regs *r)
     *  display a message on the screen */
     if (ticks % 100 == 0)
     {
-        putstr("One second has passed\n");
+        //putstr("One second has passed\n");
     }
 }
 
