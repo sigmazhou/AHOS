@@ -17,5 +17,5 @@ gcc -m32 -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nos
 
 gcc -m32 -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -fno-stack-protector -I. -c -o string.o string.c
 
-ld -m elf_i386 -T link.ld -o ahos-kernel.elf *.o #start.o main.o screen.o gdt.o idt.o isr.o
+ld -m elf_i386 -T link.ld -o ahos.elf *.o #start.o main.o screen.o gdt.o idt.o isr.o
 #objcopy -O binary kernel.elf kernel.bin
