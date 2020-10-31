@@ -1,2 +1,2 @@
 # AHOS
-Something Something in development
+A basic operating system in development... 
