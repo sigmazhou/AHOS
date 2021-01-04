@@ -10,7 +10,7 @@ struct regs
     unsigned int eip, cs, eflags, useresp, ss;   /* pushed by the processor automatically */ 
 };
 
-typedef void (*int_handler_t)(struct regs *);
+typedef void (*int_handler_t)(struct regs *);   //handler函数指针类
 
 extern unsigned char *memcpy(unsigned char *dest, const unsigned char *src, int count);
 extern unsigned char *memset(unsigned char *dest, unsigned char val, int count);
